@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>讨论区</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="/js/SimplePagination.js"></script>
+    <script src="/js/init.js"></script>
+    <script src="/js/push2.js"></script>
+    <link rel="stylesheet" href="/css/base.css">
+    <style>
+        .pagination {
+            margin: 0;
+            font-size: 0;
+            text-align: center; }
+        .pagination .page-li {
+            display: inline-block;
+            font-size: 12px;
+            line-height: 1;
+            -ms-user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            user-select: none; }
+        .pagination .page-li:hover {
+            cursor: pointer;
+            background-color: #EAEAEA; }
+        .pagination .page-li.page-active {
+            cursor: default;
+            color: #fff;
+            border-color: #00a65a;
+            background-color: #00a65a; }
+        .pagination .page-li.number-ellipsis {
+            border: none;
+            cursor: default; }
+        .pagination .page-li.number-ellipsis:hover {
+            background-color: #fff; }
+        .pagination .page-number {
+            width: 30px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            border: 1px solid #EAEAEA;
+            text-align: center; }
+        .pagination .page-prev {
+            padding: 8px 14px;
+            margin-right: 8px;
+            border: 1px solid #EAEAEA; }
+        .pagination .page-prev.no-prev {
+            color: #c6c6c6; }
+        .pagination .page-prev.no-prev:hover {
+            cursor: default;
+            background-color: #fff; }
+        .pagination .page-next {
+            padding: 8px 14px;
+            margin-left: 8px;
+            border: 1px solid #EAEAEA; }
+        .pagination .page-next.no-next {
+            color: #c6c6c6; }
+        .pagination .page-next.no-next:hover {
+            cursor: default;
+            background-color: #fff; }
+        .pagination .number-ellipsis {
+            display: inline-block;
+            font-size: 15px;
+            padding: 8px 14px; }
+        .pagination .number-ellipsis.page-hidden {
+            display: none; }
+        #page-go {
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div id="header">
+    <div class="content">
+        <div class="left">基于springboot的职位数据采集分析平台</div>
+        <div class="right">
+            <ul>
+                <li class="index"><a href="/index">首页</a></li>
+                <li><a href="/search">职位搜索</a></li>
+                <li><a href="/store">我的收藏</a></li>
+                <li><a href="/discuss" class="cur">讨论区</a></li>
+                <li><a href="/issue">我的发布</a></li>
+                <li><a href="/chat">好友聊天</a></li>
+                <li><a href="/center">个人中心</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="main">
+    <div class="content pt30 pb30 row">
+        <div class="col-md-10" id="left">
+<!--            <a href="post.html" target="_blank" style="text-decoration: none" class="hidden">-->
+<!--                <div class="panel panel-success text-muted">-->
+<!--                    <span id="postId" class="hidden">2772908924928</span>-->
+<!--                    <div class="panel-body">-->
+<!--                        <h5>_1328 <small>求职</small> <small class="pull-right">2020-01-02</small></h5>-->
+<!--                        <p>-->
+<!--                            Bootstrap 是全球最受欢迎的前端开源工具库，它支持 Sass 变量和 mixin、响应式栅格系统、自带大量组件和众多强大的 JavaScript 插件。基于 Bootstrap 提供的强大功能，能够让你快速设计并定制你的网站。Bootstrap 是全球最受欢迎的前端开源工具库，它支持 Sass 变量和 mixin、响应式栅格系统、自带大量组件和众多强大的 JavaScript 插件。基于 Bootstrap 提供的强大功能，能够让你快速设计并定制你的网站。-->
+<!--                            <span class="label label-success">评论 4</span>-->
+<!--                        </p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </a>-->
+        </div>
+        <div class="col-md-2" id="right">
+<!--            <a href="detail.html" style="text-decoration: none" class="hidden">-->
+<!--                <div class="panel panel-danger">-->
+<!--                    <div class="panel-body text-muted">-->
+<!--                        <h5>Java开发工程师</h5>-->
+<!--                        <h6>前锦网络信息技术（上海）有限公司</h6>-->
+<!--                        <h6><span>北京</span> <span>6000-8000</span></h6>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </a>-->
+            <!-- Button trigger modal -->
+<!--            <button type="button" class="btn btn-success btn-xs hidden" data-toggle="modal" data-target="#myModal">-->
+<!--                发布-->
+<!--            </button>-->
+        </div>
+        <div class="col-md-12">
+            <div class="box"></div>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <div class="content">
+        Copyright © 2016-2020 Echo
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">发布帖子</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label class="control-label h5">标题</label>
+                        <input id="postTitle" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label h5">内容</label>
+                        <textarea id="postContent" class="form-control"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-xs" data-dismiss="modal">关闭</button>
+                <button id="save" type="button" class="btn btn-primary btn-xs">保存更改</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        // 发布帖子
+        var saveBtn = $("#save");
+        saveBtn.click(function () {
+            var postTitle = $("#postTitle").val();
+            var postContent = $("#postContent").val();
+            var userId = $("#userId").text();
+            var userName = $("#userName").text();
+            $.ajax({
+                type: "post",
+                url: "http://localhost:8080/post/add",
+                contentType: "application/json;charset=UTF-8",
+                data: JSON.stringify({
+                    "postTitle": postTitle,
+                    "postContent": postContent,
+                    "userId": userId,
+                    "userName": userName,
+                    "createTime": new Date().format("yyyy-MM-dd hh:mm:ss")
+                }),
+                success: function (res) {
+                    alert(res.message);
+                    window.location.reload();
+                }
+            });
+        });
+
+        // 帖子分页显示
+        var slp = null;
+        var func = function(page, size) {
+            $.ajax({
+                type: "get",
+                url: "http://localhost:8080/post/findAll?page=" + page + "&size=" + size,
+                success: function (res) {
+                    var leftDiv = $("#left");
+                    leftDiv.empty();
+                    for (var i = 0 ; i < res.data.length; i++) {
+                        var a = $(`<a href="post/${res.data[i].postId}" target="_blank" style="text-decoration: none">
+                                    <div class="panel panel-success text-muted">
+                                        <div class="panel-body">
+                                            <h5>${res.data[i].userName} <small>${res.data[i].postTitle}</small> <small class="pull-right">${res.data[i].createTime}</small></h5>
+                                            <p>
+                                                ${res.data[i].postContent}
+                                                <span class="label label-success">评论 ${res.data[i].replyList.length}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>`);
+                        leftDiv.append(a);
+                    }
+                    $.ajax({
+                        type: "get",
+                        url: "http://localhost:8080/post/count",
+                        success: function (res) {
+                            if (slp == null) {
+                                slp = new SimplePagination((res.data + 4 - 1) / 4);
+                                slp.init({
+                                    container: '.box',
+                                    maxShowBtnCount: 3,
+                                    onPageChange: state => {
+                                        console.log('pagination change:', state.pageNumber);
+                                        func(state.pageNumber, 4);
+                                    }
+                                })
+                            }
+                        }
+                    });
+                }
+            });
+        }
+        func(1, 4);
+    })
+</script>
+</body>
+</html>

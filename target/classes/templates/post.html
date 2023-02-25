@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>帖子</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="/js/SimplePagination.js"></script>
+    <script src="/js/init.js"></script>
+    <script src="/js/push.js"></script>
+    <link rel="stylesheet" href="/css/base.css">
+    <style>
+        .pagination {
+            margin: 0;
+            font-size: 0;
+            text-align: center; }
+        .pagination .page-li {
+            display: inline-block;
+            font-size: 12px;
+            line-height: 1;
+            -ms-user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            user-select: none; }
+        .pagination .page-li:hover {
+            cursor: pointer;
+            background-color: #EAEAEA; }
+        .pagination .page-li.page-active {
+            cursor: default;
+            color: #fff;
+            border-color: #00a65a;
+            background-color: #00a65a; }
+        .pagination .page-li.number-ellipsis {
+            border: none;
+            cursor: default; }
+        .pagination .page-li.number-ellipsis:hover {
+            background-color: #fff; }
+        .pagination .page-number {
+            width: 30px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            border: 1px solid #EAEAEA;
+            text-align: center; }
+        .pagination .page-prev {
+            padding: 8px 14px;
+            margin-right: 8px;
+            border: 1px solid #EAEAEA; }
+        .pagination .page-prev.no-prev {
+            color: #c6c6c6; }
+        .pagination .page-prev.no-prev:hover {
+            cursor: default;
+            background-color: #fff; }
+        .pagination .page-next {
+            padding: 8px 14px;
+            margin-left: 8px;
+            border: 1px solid #EAEAEA; }
+        .pagination .page-next.no-next {
+            color: #c6c6c6; }
+        .pagination .page-next.no-next:hover {
+            cursor: default;
+            background-color: #fff; }
+        .pagination .number-ellipsis {
+            display: inline-block;
+            font-size: 15px;
+            padding: 8px 14px; }
+        .pagination .number-ellipsis.page-hidden {
+            display: none; }
+        #page-go {
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div id="header">
+    <div class="content">
+        <div class="left">基于springboot的职位数据采集分析平台</div>
+        <div class="right">
+            <ul>
+                <li class="index"><a href="/index">首页</a></li>
+                <li><a href="/search">职位搜索</a></li>
+                <li><a href="/store">我的收藏</a></li>
+                <li><a href="/discuss">讨论区</a></li>
+                <li><a href="/issue">我的发布</a></li>
+                <li><a href="/chat">好友聊天</a></li>
+                <li><a href="/center">个人中心</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="main">
+    <div class="content pt30 row">
+        <div class="col-md-10" id="left">
+<!--            <div class="panel panel-success text-muted hidden">-->
+<!--                <div class="panel-body">-->
+<!--                    <h5>_1328 <small>求职</small> <small class="pull-right">2020-01-02</small></h5>-->
+<!--                    <p>-->
+<!--                        Bootstrap 是全球最受欢迎的前端开源工具库，它支持 Sass 变量和 mixin、响应式栅格系统、自带大量组件和众多强大的 JavaScript 插件。基于 Bootstrap 提供的强大功能，能够让你快速设计并定制你的网站。Bootstrap 是全球最受欢迎的前端开源工具库，它支持 Sass 变量和 mixin、响应式栅格系统、自带大量组件和众多强大的 JavaScript 插件。基于 Bootstrap 提供的强大功能，能够让你快速设计并定制你的网站。-->
+<!--                        <span class="label label-success">评论 4</span>-->
+<!--                        <button id="add" type="button" class="btn btn-warning btn-xs pull-right">-->
+<!--                            加好友-->
+<!--                        </button>-->
+<!--                        &lt;!&ndash; Button trigger modal &ndash;&gt;-->
+<!--                        <button type="button" class="btn btn-info btn-xs pull-right mr10" data-toggle="modal" data-target="#myModal">-->
+<!--                            回复-->
+<!--                        </button>-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="page-header hidden">-->
+<!--                <h5>张三 <small class="pull-right">2021.01.01</small></h5>-->
+<!--                <p>Bootstrap 是全球最受欢迎的前端开源工具库，它支持 Sass 变量和 mixin、响应式栅格系统、自带大量组件和众多强大的 JavaScript 插件。基于 Bootstrap 提供的强大功能，能够让你快速设计并定制你的网站。Bootstrap 是全球最受欢迎的前端开源工具库，它支持 Sass 变量和 mixin、响应式栅格系统、自带大量组件和众多强大的 JavaScript 插件。基于 Bootstrap 提供的强大功能，能够让你快速设计并定制你的网站。-->
+<!--                    <button id="del" type="button" class="btn btn-danger btn-xs pull-right">-->
+<!--                        删除-->
+<!--                    </button>-->
+<!--                </p>-->
+<!--            </div>-->
+        </div>
+        <div class="col-md-2" id="right">
+<!--            <a href="detail.html" style="text-decoration: none" class="hidden">-->
+<!--                <div class="panel panel-success">-->
+<!--                    <div class="panel-body text-muted">-->
+<!--                        <h5>Java开发工程师</h5>-->
+<!--                        <h6>前锦网络信息技术（上海）有限公司</h6>-->
+<!--                        <h6><span>北京</span> <span>6000-8000</span></h6>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </a>-->
+        </div>
+        <div class="col-md-12">
+            <div class="box"></div>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <div class="content">
+        Copyright © 2016-2020 Echo
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">回复帖子</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label class="control-label h5">回复内容</label>
+                        <textarea id="replyContent" class="form-control"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-xs" data-dismiss="modal">关闭</button>
+                <button id="save" type="button" class="btn btn-primary btn-xs">保存更改</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel2">修改回复</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <span class="hidden" id="replyId"></span>
+                        <label class="control-label h5">回复内容</label>
+                        <textarea id="replyContent2" class="form-control"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-xs" data-dismiss="modal">关闭</button>
+                <button id="save2" type="button" class="btn btn-primary btn-xs">保存更改</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        // 回复帖子
+        var saveBtn = $("#save");
+        saveBtn.click(function () {
+            var postId = $("#postId").text();
+            var replyContent = $("#replyContent").val();
+            var userId = $("#userId").text();
+            var userName = $("#userName").text();
+            $.ajax({
+                type: "post",
+                url: "http://localhost:8080/reply/add",
+                contentType: "application/json;charset=UTF-8",
+                data: JSON.stringify({
+                    "postId": postId,
+                    "replyContent": replyContent,
+                    "userId": userId,
+                    "userName": userName,
+                    "createTime": new Date().format("yyyy-MM-dd hh:mm:ss")
+                }),
+                success: function (res) {
+                    alert(res.message);
+                    window.location.reload();
+                }
+            })
+        });
+
+        // 修改回复
+        var modifyBtn = $("#save2");
+        modifyBtn.click(function () {
+            var replyId = $("#replyId").text();
+            var replyContent = $("#replyContent2").val();
+            $.ajax({
+                type: "post",
+                url: "http://localhost:8080/reply/modify",
+                contentType: "application/json;charset=UTF-8",
+                data: JSON.stringify({
+                    "replyId": replyId,
+                    "replyContent": replyContent
+                }),
+                success: function (res) {
+                    alert(res.message);
+                    window.location.reload();
+                }
+            })
+        });
+
+        // 回复分页显示
+        var slp = null;
+        var func = function (page, size) {
+            var str = window.location.href;
+            var postId = str.substring(str.lastIndexOf("/") + 1);
+            $.ajax({
+                type: "get",
+                url: "http://localhost:8080/post/findByIdWithPage?id=" + postId + "&page=" + page + "&size=" + size,
+                success: function (res) {
+                    var leftDiv = $("#left");
+                    leftDiv.empty();
+                    var postDiv = $(`<div class="panel panel-success text-muted">
+                                    <div class="panel-body">
+                                        <p class="hidden">
+                                            <span id="postId">${res.postId}</span>
+                                            <span id="postUserId">${res.userId}</span>
+                                            <span id="postUserName">${res.userName}</span>
+                                        </p>
+                                        <h5>${res.userName} <small>${res.postTitle}</small> <small class="pull-right">${res.createTime}</small></h5>
+                                        <p>
+                                            ${res.postContent}
+                                            <button friendId="${res.userId}" friendName="${res.userName}" type="button" class="btn btn-default btn-xs pull-right addFriend">
+                                                加好友
+                                            </button>
+                                            <button type="button" class="btn btn-default btn-xs pull-right mr10" data-toggle="modal" data-target="#myModal">
+                                                回复
+                                            </button>
+                                        </p>
+                                    </div>
+                                </div>`);
+                    leftDiv.append(postDiv);
+                    for (var i = 0; i < res.replyList.length; i++) {
+                        var replyDiv = null;
+                        if ($.cookie("name") === res.replyList[i].userId) {
+                            replyDiv = $(`<div class="page-header text-muted">
+                                        <h5>${res.replyList[i].userName} ${res.replyList[i].userId} <small class="pull-right">${res.replyList[i].createTime}</small></h5>
+                                        <p>
+                                            ${res.replyList[i].replyContent}
+                                            <button val="${res.replyList[i].replyId}" type="button" class="btn btn-danger btn-xs pull-right del">
+                                                删除
+                                            </button>
+                                            <button val="${res.replyList[i].replyId}" type="button" class="btn btn-default btn-xs pull-right mr10 modifyReply" data-toggle="modal" data-target="#myModal2">
+                                                修改
+                                            </button>
+                                        </p>
+                                    </div>`);
+                        } else {
+                            replyDiv = $(`<div class="page-header text-muted">
+                                        <h5>${res.replyList[i].userName} ${res.replyList[i].userId} <small class="pull-right">${res.replyList[i].createTime}</small></h5>
+                                        <p>
+                                            ${res.replyList[i].replyContent}
+                                            <button friendId="${res.replyList[i].userId}" friendName="${res.replyList[i].userName}" type="button" class="btn btn-default btn-xs pull-right addFriend">
+                                                加好友
+                                            </button>
+                                        </p>
+                                    </div>`);
+                        }
+                        leftDiv.append(replyDiv);
+                    }
+                    $.ajax({
+                        type: "get",
+                        url: "http://localhost:8080/post/findById?id=" + postId,
+                        success: function (res) {
+                            if (slp == null) {
+                                console.log((res.replyList.length + 4 - 1) / 4);
+                                slp = new SimplePagination((res.replyList.length + 4 - 1) / 4);
+                                slp.init({
+                                    container: '.box',
+                                    maxShowBtnCount: 3,
+                                    onPageChange: state => {
+                                        console.log('pagination change:', state.pageNumber);
+                                        func(state.pageNumber, 4);
+                                    }
+                                })
+                            }
+                        }
+                    });
+                }
+            });
+        }
+        func(1, 4);
+
+        // 添加好友
+        $(document).on("click", ".addFriend", function () {
+            var userId = $("#userId").text();
+            var friendId = $(this).attr("friendId");
+            if (userId === friendId) {
+                alert("不能添加自己为好友!");
+                return;
+            }
+            $.ajax({
+                type: "post",
+                url: "http://localhost:8080/friend/add",
+                contentType: "application/json;charset=UTF-8",
+                data: JSON.stringify({
+                    "userId": $("#userId").text(),
+                    "userName": $("#userName").text(),
+                    "friendId": $(this).attr("friendId"),
+                    "friendName": $(this).attr("friendName")
+                }),
+                success: function (res) {
+                    alert(res.message);
+                }
+            });
+        });
+
+        // 删除回复
+        $(document).on("click", ".del", function () {
+            $.ajax({
+                type: "get",
+                url: "http://localhost:8080/reply/del?id=" + $(this).attr("val"),
+                success: function (res) {
+                    alert(res.message);
+                    window.location.reload();
+                }
+            });
+        });
+
+        // 修改回复
+        $(document).on("click", ".modifyReply", function () {
+            var replyId = $(this).attr("val");
+            // console.log(replyId);
+            $.ajax({
+                type: "get",
+                url: "http://localhost:8080/reply/findById?id=" + replyId,
+                success: function (res) {
+                    // console.log(res);
+                    $("#replyId").text(res.data.replyId);
+                    $("#replyContent2").val(res.data.replyContent);
+                }
+            });
+        });
+    })
+</script>
+</body>
+</html>
